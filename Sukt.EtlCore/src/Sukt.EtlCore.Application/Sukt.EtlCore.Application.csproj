@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
+  </ItemGroup>
+
+<ItemGroup>
+    <ProjectReference Include="..\Sukt.EtlCore.Domain.Models\Sukt.EtlCore.Domain.Models.csproj" />
+    <ProjectReference Include="..\Sukt.EtlCore.Domain.Repository\Sukt.EtlCore.Domain.Repository.csproj" />
+    <ProjectReference Include="..\Sukt.EtlCore.Dtos\Sukt.EtlCore.Dtos.csproj" />
+  </ItemGroup></Project>
