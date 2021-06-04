@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sukt.AspNetCore;
 using Sukt.EtlCore.WorkNode.API.Startups;
-using SuktCore.AspNetCore.Middleware;
-using SuktCore.MultiTenancy;
-using SuktCore.Shared.Modules;
+using Sukt.Module.Core.Modules;
 
 namespace Sukt.EtlCore.WorkNode.API
 {
@@ -34,7 +33,7 @@ namespace Sukt.EtlCore.WorkNode.API
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseMultiTenancy();
+            //app.UseMultiTenancy();
             app.UseErrorHandling();
             app.InitializeApplication();
             //app.UseAppModule<SuktAspNetCoreAppModuleManager>();

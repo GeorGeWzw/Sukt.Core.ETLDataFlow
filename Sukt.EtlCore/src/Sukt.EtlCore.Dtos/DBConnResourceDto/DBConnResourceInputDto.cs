@@ -1,5 +1,5 @@
 ﻿using Sukt.EtlCore.Domain.Models.DBConn;
-using SuktCore.Shared.Entity;
+using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 

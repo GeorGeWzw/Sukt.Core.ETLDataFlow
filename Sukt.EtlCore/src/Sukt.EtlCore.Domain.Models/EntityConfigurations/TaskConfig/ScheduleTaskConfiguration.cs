@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Sukt.EntityFrameworkCore.MappingConfiguration;
 using Sukt.EtlCore.Domain.Models.TaskConfig;
-using SuktCore.Shared;
 using System;
 
 namespace Sukt.EtlCore.Domain.Models.EntityConfigurations.TaskConfig

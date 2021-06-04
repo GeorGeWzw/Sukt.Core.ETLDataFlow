@@ -1,8 +1,8 @@
 ﻿using Sukt.EtlCore.WorkNode.Dtos.DataDictionaryDto;
-using SuktCore.Shared;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Extensions.ResultExtensions;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions.ResultExtensions;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Threading.Tasks;
 

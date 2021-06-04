@@ -1,8 +1,8 @@
-﻿using SuktCore.MultiTenancy;
+﻿//using SuktCore.MultiTenancy;
 
-namespace Sukt.EtlCore.API.Startups
-{
-    public class MultiTenancyModule : MultiTenancyModuleBase
-    {
-    }
-}
+//namespace Sukt.EtlCore.API.Startups
+//{
+//    public class MultiTenancyModule : MultiTenancyModuleBase
+//    {
+//    }
+//}

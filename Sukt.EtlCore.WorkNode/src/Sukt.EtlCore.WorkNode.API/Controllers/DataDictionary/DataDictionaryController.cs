@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sukt.EtlCore.WorkNode.Application;
-using SuktCore.AspNetCore.ApiBase;
 using Sukt.EtlCore.WorkNode.Dtos.DataDictionaryDto;
-using SuktCore.Shared.AjaxResult;
-using SuktCore.Shared.Audit;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.OperationResult;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Sukt.Module.Core.OperationResult;
+using Sukt.Module.Core.Audit;
+using Sukt.AspNetCore;
+using Sukt.Module.Core.AjaxResult;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions;
 
 namespace Sukt.EtlCore.WorkNode.API.Controllers.DataDictionary
 {

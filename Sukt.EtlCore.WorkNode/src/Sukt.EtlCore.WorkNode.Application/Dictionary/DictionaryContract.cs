@@ -1,14 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sukt.EtlCore.WorkNode.Domain.Models.SystemFoundation.DataDictionary;
-using Sukt.EtlCore.WorkNode.Domain.Repository.DomainRepository;
 using Sukt.EtlCore.WorkNode.Dtos.DataDictionaryDto;
-using SuktCore.Shared.Attributes.Dependency;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Enums;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Extensions.ResultExtensions;
-using SuktCore.Shared.OperationResult;
-using SuktCore.Shared.ResultMessageConst;
+using Sukt.Module.Core.Attributes.Dependency;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Enums;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.Extensions.ResultExtensions;
+using Sukt.Module.Core.OperationResult;
+using Sukt.Module.Core.ResultMessageConst;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,9 +20,9 @@ namespace Sukt.EtlCore.WorkNode.Application
     [Dependency(ServiceLifetime.Scoped)]
     public class DictionaryContract : IDictionaryContract
     {
-        private readonly IDataDictionaryRepository _dataDictionary;
+        private readonly IEFCoreRepository<DataDictionaryEntity,Guid> _dataDictionary;
 
-        public DictionaryContract(IDataDictionaryRepository dataDictionary)
+        public DictionaryContract(IEFCoreRepository<DataDictionaryEntity,Guid> dataDictionary)
         {
             _dataDictionary = dataDictionary;
         }
@@ -62,7 +61,7 @@ namespace Sukt.EtlCore.WorkNode.Application
             var list = await _dataDictionary.NoTrackEntities.ToTreeResultAsync<DataDictionaryEntity, TreeDictionaryOutDto>(
                 (p, c) =>
                 {
-                    return c.ParentId == null || c.ParentId == Guid.Empty;
+                    return c.ParentId == Guid.Empty;
                 },
                 (p, c) =>
                 {

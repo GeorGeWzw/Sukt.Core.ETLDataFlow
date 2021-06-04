@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,5 +11,6 @@
 <ItemGroup>
     <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Domain.Models\Sukt.EtlCore.WorkNode.Domain.Models.csproj" />
     <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Domain.Repository\Sukt.EtlCore.WorkNode.Domain.Repository.csproj" />
+    <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Domain.Services\Sukt.EtlCore.WorkNode.Domain.Services.csproj" />
     <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Dtos\Sukt.EtlCore.WorkNode.Dtos.csproj" />
   </ItemGroup></Project>

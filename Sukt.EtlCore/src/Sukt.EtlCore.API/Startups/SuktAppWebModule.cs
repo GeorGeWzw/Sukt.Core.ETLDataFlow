@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using SuktCore.Aop;
-using SuktCore.AspNetCore.Filters;
-using SuktCore.AutoMapper;
+using Sukt.AspNetCore;
+using Sukt.AutoMapper;
 using Sukt.EtlCore.Domain.Models;
-using SuktCore.Shared;
-using SuktCore.Shared.AppOption;
-using SuktCore.Shared.Events;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Modules;
-using SuktCore.Shared.SuktDependencyAppModule;
-using SuktCore.Swagger;
+using Sukt.EtlCore.EntityFrameworkCore;
+using Sukt.Module.Core.AppOption;
+using Sukt.Module.Core.Events;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.Modules;
+using Sukt.Module.Core.SuktDependencyAppModule;
+using Sukt.Swagger;
+using SuktCore.Aop;
 using System;
 using System.Linq;
 
@@ -26,8 +26,8 @@ namespace Sukt.EtlCore.API.Startups
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
         typeof(EntityFrameworkCoreModule),
-        typeof(MongoDBModule),
-        typeof(MultiTenancyModule),
+        //typeof(MongoDBModule),
+        //typeof(MultiTenancyModule),
         typeof(MigrationModuleBase)
         )]
     public class SuktAppWebModule : SuktAppModule

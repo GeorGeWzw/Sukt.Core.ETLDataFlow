@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Sukt.EtlCore.Dtos.TaskConfig;
-using SuktCore.Shared;
-using SuktCore.Shared.Entity;
-using SuktCore.Shared.Extensions.ResultExtensions;
-using SuktCore.Shared.OperationResult;
+using Sukt.Module.Core;
+using Sukt.Module.Core.Entity;
+using Sukt.Module.Core.Extensions.ResultExtensions;
+using Sukt.Module.Core.OperationResult;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

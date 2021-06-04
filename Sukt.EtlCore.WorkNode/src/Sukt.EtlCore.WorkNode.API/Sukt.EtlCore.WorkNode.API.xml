@@ -18,7 +18,7 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:Sukt.EtlCore.WorkNode.API.Controllers.DataDictionary.DataDictionaryController.GetPageAsync(SuktCore.Shared.Entity.PageRequest)">
+        <member name="M:Sukt.EtlCore.WorkNode.API.Controllers.DataDictionary.DataDictionaryController.GetPageAsync(Sukt.Module.Core.Entity.PageRequest)">
             <summary>
             分页查询
             </summary>

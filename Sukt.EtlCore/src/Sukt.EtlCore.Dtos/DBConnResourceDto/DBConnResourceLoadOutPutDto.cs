@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Sukt.EtlCore.Domain.Models.DBConn;
 using Sukt.EtlCore.Domain.Models.DBConnResource;
-using SuktCore.Shared.Entity;
+using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using SuktCore.Shared.AppOption;
-using SuktCore.Shared.Extensions;
-using SuktCore.Shared.Modules;
+using Sukt.Module.Core.AppOption;
+using Sukt.Module.Core.Extensions;
+using Sukt.Module.Core.Modules;
 using System;
 using System.Security.Principal;
 using System.Threading.Tasks;
