@@ -25,9 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.EtlCore.Domain.Reposit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.EtlCore.Domain.Services", "src\Sukt.EtlCore.Domain.Services\Sukt.EtlCore.Domain.Services.csproj", "{A9B3D210-C176-4C2A-A75A-21DB5414BF27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.EtlCore.EntityFrameworkCore", "src\Sukt.EtlCore.EntityFrameworkCore\Sukt.EtlCore.EntityFrameworkCore.csproj", "{4BF239BB-3B99-4D82-9F38-FA05404B4C0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.EtlCore.EntityFrameworkCore", "src\Sukt.EtlCore.EntityFrameworkCore\Sukt.EtlCore.EntityFrameworkCore.csproj", "{4BF239BB-3B99-4D82-9F38-FA05404B4C0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.EtlCore.EntityFrameworkCore.DbMigrations", "src\Sukt.EtlCore.EntityFrameworkCore.DbMigrations\Sukt.EtlCore.EntityFrameworkCore.DbMigrations.csproj", "{944A6723-41A8-4A5E-B898-F087A6B2E5ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sukt.EtlCore.EntityFrameworkCore.DbMigrations", "src\Sukt.EtlCore.EntityFrameworkCore.DbMigrations\Sukt.EtlCore.EntityFrameworkCore.DbMigrations.csproj", "{944A6723-41A8-4A5E-B898-F087A6B2E5ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sukt.EtlCore.Shared", "src\Sukt.EtlCore.Shared\Sukt.EtlCore.Shared.csproj", "{7E75D23C-61A8-4A3B-BE85-30C728A06456}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,10 @@ Global
 		{944A6723-41A8-4A5E-B898-F087A6B2E5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{944A6723-41A8-4A5E-B898-F087A6B2E5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{944A6723-41A8-4A5E-B898-F087A6B2E5ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E75D23C-61A8-4A3B-BE85-30C728A06456}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E75D23C-61A8-4A3B-BE85-30C728A06456}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E75D23C-61A8-4A3B-BE85-30C728A06456}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E75D23C-61A8-4A3B-BE85-30C728A06456}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{A9B3D210-C176-4C2A-A75A-21DB5414BF27} = {1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}
 		{4BF239BB-3B99-4D82-9F38-FA05404B4C0F} = {1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}
 		{944A6723-41A8-4A5E-B898-F087A6B2E5ED} = {1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}
+		{7E75D23C-61A8-4A3B-BE85-30C728A06456} = {1EA7AD7C-E9FA-468E-9FFC-F626C0B56563}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05B139D9-1492-4454-AF04-522949DE00D3}

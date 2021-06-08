@@ -1,10 +1,12 @@
-﻿using Sukt.EtlCore.Domain.Models.TaskConfig;
+﻿using AutoMapper;
+using Sukt.EtlCore.Domain.Models.TaskConfig;
 using Sukt.Module.Core.Entity;
 using System;
 using System.ComponentModel;
 
 namespace Sukt.EtlCore.Dtos.TaskConfig
 {
+    [AutoMap(typeof(ScheduleTask))]
     public class ScheduleTaskPageOutPutDto : OutputDtoBase<Guid>
     {
         /// <summary>

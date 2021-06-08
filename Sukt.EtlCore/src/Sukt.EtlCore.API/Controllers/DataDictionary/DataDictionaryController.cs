@@ -15,7 +15,7 @@ using Sukt.Module.Core.Extensions;
 namespace Sukt.EtlCore.API.Controllers.DataDictionary
 {
     [Description("数据字典管理")]
-    public class DataDictionaryController : ApiControllerBase
+    public class DataDictionaryController : Sukt.EtlCore.Shared.ApiControllerBase
     {
         private readonly IDictionaryContract _dictionary = null;
         private readonly ILogger<DataDictionaryController> _logger = null;

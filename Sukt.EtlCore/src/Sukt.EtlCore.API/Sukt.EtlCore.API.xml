@@ -44,5 +44,90 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController">
+            <summary>
+            数据连接管理
+            </summary>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.CreateAsync(Sukt.EtlCore.Dtos.DBConnResourceDto.DBConnResourceInputDto)">
+            <summary>
+            添加数据连接
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.UpdateAsync(Sukt.EtlCore.Dtos.DBConnResourceDto.DBConnResourceInputDto)">
+            <summary>
+            修改数据连接
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.UpdateAsync(System.Nullable{System.Guid})">
+            <summary>
+            表单加载数据连接
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.GetPageLoadAsync(Sukt.Module.Core.Entity.PageRequest)">
+            <summary>
+            分页加载数据连接
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.DeleteAsync(System.Nullable{System.Guid})">
+            <summary>
+            删除数据连接
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.GetLoadSelectListItemAsync">
+            <summary>
+            数据连接下拉列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.ImportMetaDataAsync(Sukt.EtlCore.Dtos.DataDictionaryDto.MetaDataImportInputDto)">
+            <summary>
+            导入元数据
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.DBConnectionController.GetLoadMetaDataAsync(System.Guid)">
+            <summary>
+            获取元数据
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DestinyCore.ETLDispatchCenter.API.Controllers.ScheduleTaskController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.ScheduleTaskController.GetLoadSelectListItemAsync">
+            <summary>
+            加载任务下拉列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.ScheduleTaskController.CreateAsync(Sukt.EtlCore.Dtos.TaskConfig.ScheduleTaskInputDto)">
+            <summary>
+            添加任务
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DestinyCore.ETLDispatchCenter.API.Controllers.ScheduleTaskController.GetPageLoadAsync(Sukt.Module.Core.Entity.PageRequest)">
+            <summary>
+            添加任务
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

@@ -50,13 +50,20 @@
     <ProjectReference Include="..\Sukt.EtlCore.Application\Sukt.EtlCore.Application.csproj" />
     <ProjectReference Include="..\Sukt.EtlCore.Dtos\Sukt.EtlCore.Dtos.csproj" />
     <ProjectReference Include="..\Sukt.EtlCore.EntityFrameworkCore.DbMigrations\Sukt.EtlCore.EntityFrameworkCore.DbMigrations.csproj" />
+    <ProjectReference Include="..\Sukt.EtlCore.Shared\Sukt.EtlCore.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SuktCoreMongoDb.txt">
+    <None Update="SuktEtlCoreMySqlDb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SuktEtlMongoDb.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="SuktEtlRedis.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

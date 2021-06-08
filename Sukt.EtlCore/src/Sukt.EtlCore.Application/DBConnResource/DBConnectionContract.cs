@@ -1,4 +1,5 @@
 ﻿
+using DestinyCore.ETLDispatchCenter.EntityFrameworkCore.SqlSugar;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Sukt.EtlCore.Domain.Models.DBConnResource;
@@ -23,7 +24,7 @@ namespace Sukt.EtlCore.Application.DBConnResource
     public class DBConnectionContract : IDBConnectionContract
     {
         private readonly IAggregateRootRepository<DBConnection, Guid> _dbconnectionRepository = null;
-        //private readonly ISqlSugarDbContext _sqlSugarDbContext;
+        private readonly ISqlSugarDbContext _sqlSugarDbContext;
 
         public DBConnectionContract(IAggregateRootRepository<DBConnection, Guid> dbconnectionRepository, ISqlSugarDbContext sqlSugarDbContext)
         {
