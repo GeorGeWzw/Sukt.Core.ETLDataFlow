@@ -1,62 +1,62 @@
-﻿using Sukt.EtlCore.WorkNode.BlockFLowkDataTransMission;
-using Sukt.EtlCore.WorkNode.BlockBlockOption.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using Sukt.EtlCore.WorkNode.Block.BlockOption.Input;
+using Sukt.EtlCore.WorkNode.BlockFLowkDataTransMission;
 
-namespace DestinyCore.WorkNode.Block.DestinyCoreBlock.Input
+namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
 {
-    public class JsonInputBlock<IDataTransMission> : IPropagatorBlock<IDataTransMission, IDataTransMission>, IReceivableSourceBlock<IDataTransMission>
+    public class JsonInputBlock<TDataTransMission> : IPropagatorBlock<TDataTransMission, TDataTransMission>, IReceivableSourceBlock<TDataTransMission>
     {
-        public readonly DataTransMission _datatransmission;
+        public readonly DataTransMission DataTransMission;
         /// <summary>
         /// 私有来源表变量
         /// </summary>
-        private readonly IReceivableSourceBlock<IDataTransMission> m_source;
+        private readonly IReceivableSourceBlock<TDataTransMission> _mSource;
         /// <summary>
         /// 目标连接块
         /// </summary>
-        private readonly ITargetBlock<IDataTransMission> m_target;
+        private readonly ITargetBlock<TDataTransMission> _mTarget;
         public JsonInputBlock(ReadJsonConfig readJsonConfig)
         {
             // 创建一个队列来保存消息。
-            var queue = new Queue<IDataTransMission>();
+            var queue = new Queue<TDataTransMission>();
             //传播器的源部分包含大小为readJsonConfig的对象并将数据传播到任何连接的目标。
-            var source = new BufferBlock<IDataTransMission>();
+            var source = new BufferBlock<TDataTransMission>();
             // 目标部件接收数据并将其添加到队列中。
-            var target = new ActionBlock<IDataTransMission>(item =>
+            var target = new ActionBlock<TDataTransMission>(item =>
             {
                
             });
+            
+            
 
             // 当目标设置为完成状态时，传播任何并将源设置为已完成状态。
             target.Completion.ContinueWith(delegate
             {
                 source.Complete();
             });
-            _datatransmission = new DataTransMission();
-            m_target = target;
-            m_source = source;
+            DataTransMission = new DataTransMission();
+            _mTarget = target;
+            _mSource = source;
         }
         // 获取数据
-        public DataTransMission Data { get { return _datatransmission; } }
-
+        public DataTransMission Data => DataTransMission;
 
 
         #region IDataflowBlock 数据流块成员
         /// <summary>
         /// 获取表示当前数据流块完成的任务。
         /// </summary>
-        public Task Completion { get { return m_source.Completion; } }
+        public Task Completion => _mSource.Completion;
+
         /// <summary>
         /// 向此目标块发出信号，表示它不应再接受任何消息，也不使用延迟的消息。
         /// </summary>
         public void Complete()
         {
-            m_target.Complete();
+            _mTarget.Complete();
         }
         /// <summary>
         /// 断层故障处理
@@ -64,7 +64,7 @@ namespace DestinyCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="exception"></param>
         public void Fault(Exception exception)
         {
-            m_target.Fault(exception);
+            _mTarget.Fault(exception);
         }
         #endregion
 
@@ -75,9 +75,9 @@ namespace DestinyCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="target"></param>
         /// <param name="linkOptions"></param>
         /// <returns></returns>
-        public IDisposable LinkTo(ITargetBlock<IDataTransMission> target, DataflowLinkOptions linkOptions)
+        public IDisposable LinkTo(ITargetBlock<TDataTransMission> target, DataflowLinkOptions linkOptions)
         {
-            return m_source.LinkTo(m_target, linkOptions);
+            return _mSource.LinkTo(_mTarget, linkOptions);
         }
         /// <summary>
         /// 由目标调用以使用来自源的先前提供的消息。
@@ -86,9 +86,9 @@ namespace DestinyCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="target"></param>
         /// <param name="messageConsumed"></param>
         /// <returns></returns>
-        IDataTransMission ISourceBlock<IDataTransMission>.ConsumeMessage(DataflowMessageHeader messageHeader, ITargetBlock<IDataTransMission> target, out bool messageConsumed)
+        TDataTransMission ISourceBlock<TDataTransMission>.ConsumeMessage(DataflowMessageHeader messageHeader, ITargetBlock<TDataTransMission> target, out bool messageConsumed)
         {
-            return m_source.ConsumeMessage(messageHeader,
+            return _mSource.ConsumeMessage(messageHeader,
                target, out messageConsumed);
         }
         /// <summary>
@@ -97,18 +97,18 @@ namespace DestinyCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="messageHeader"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        bool ISourceBlock<IDataTransMission>.ReserveMessage(DataflowMessageHeader messageHeader, ITargetBlock<IDataTransMission> target)
+        bool ISourceBlock<TDataTransMission>.ReserveMessage(DataflowMessageHeader messageHeader, ITargetBlock<TDataTransMission> target)
         {
-            return m_source.ReserveMessage(messageHeader, target);
+            return _mSource.ReserveMessage(messageHeader, target);
         }
         /// <summary>
         /// 由目标调用以从源释放先前保留的消息。
         /// </summary>
         /// <param name="messageHeader"></param>
         /// <param name="target"></param>
-        void ISourceBlock<IDataTransMission>.ReleaseReservation(DataflowMessageHeader messageHeader, ITargetBlock<IDataTransMission> target)
+        void ISourceBlock<TDataTransMission>.ReleaseReservation(DataflowMessageHeader messageHeader, ITargetBlock<TDataTransMission> target)
         {
-            m_source.ReleaseReservation(messageHeader, target);
+            _mSource.ReleaseReservation(messageHeader, target);
         }
         #endregion
 
@@ -119,18 +119,18 @@ namespace DestinyCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="filter"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool TryReceive(Predicate<IDataTransMission> filter, out IDataTransMission item)
+        public bool TryReceive(Predicate<TDataTransMission> filter, out TDataTransMission item)
         {
-            return m_source.TryReceive(filter, out item);
+            return _mSource.TryReceive(filter, out item);
         }
         /// <summary>
         /// 尝试将源中的所有可用元素删除到新的返回的数组。
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool TryReceiveAll(out IList<IDataTransMission> items)
+        public bool TryReceiveAll(out IList<TDataTransMission> items)
         {
-            return m_source.TryReceiveAll(out items);
+            return _mSource.TryReceiveAll(out items);
         }
         #endregion
 
@@ -143,9 +143,9 @@ namespace DestinyCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="source"></param>
         /// <param name="consumeToAccept"></param>
         /// <returns></returns>
-        DataflowMessageStatus ITargetBlock<IDataTransMission>.OfferMessage(DataflowMessageHeader messageHeader, IDataTransMission messageValue, ISourceBlock<IDataTransMission> source, bool consumeToAccept)
+        DataflowMessageStatus ITargetBlock<TDataTransMission>.OfferMessage(DataflowMessageHeader messageHeader, TDataTransMission messageValue, ISourceBlock<TDataTransMission> source, bool consumeToAccept)
         {
-            return m_target.OfferMessage(messageHeader,
+            return _mTarget.OfferMessage(messageHeader,
                messageValue, source, consumeToAccept);
         }
         #endregion

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sukt.EtlCore.WorkNode.BlockBlockOption.Enum
+﻿namespace Sukt.EtlCore.WorkNode.Block.BlockOption.Enum
 {
     /// <summary>
     /// 字段类型
