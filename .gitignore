@@ -311,3 +311,5 @@ __pycache__/
 /Sukt.EtlCore/src/Sukt.EtlCore.API/SuktCoreMongoDb.txt
 /Sukt.EtlCore/src/Sukt.EtlCore.API/SuktCoreRedis.txt
 /Sukt.EtlCore/src/Sukt.EtlCore.API/*.txt
+/Sukt.EtlCore/src/Sukt.EtlCore.API/Logs
+/Sukt.EtlCore.WorkNode/src/Sukt.EtlCore.WorkNode.API/Logs

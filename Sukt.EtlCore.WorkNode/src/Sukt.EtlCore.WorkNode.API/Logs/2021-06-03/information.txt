@@ -1,8 +1,0 @@
-2021-06-03 23:19:40.185 +08:00 [INF] Entity Framework Core 5.0.4 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.Domain.Models ServerVersion 8.0.23-mysql 
-2021-06-03 23:24:34.608 +08:00 [INF] Entity Framework Core 5.0.4 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.Domain.DbMigrations ServerVersion 8.0.23-mysql 
-2021-06-03 23:31:15.503 +08:00 [INF] Entity Framework Core 5.0.4 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.Domain.DbMigrations ServerVersion 8.0.23-mysql 
-2021-06-03 23:31:15.950 +08:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
-CREATE DATABASE `Sukt.EtlCore.WorkNode.temp1111`;
-2021-06-03 23:50:47.725 +08:00 [INF] Entity Framework Core 5.0.4 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.EntityFrameworkCore.DbMigrations ServerVersion 8.0.23-mysql 
-2021-06-03 23:51:54.690 +08:00 [INF] Entity Framework Core 5.0.4 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.EntityFrameworkCore.DbMigrations ServerVersion 8.0.23-mysql 
-2021-06-03 23:52:06.783 +08:00 [INF] Entity Framework Core 5.0.4 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.EntityFrameworkCore.DbMigrations ServerVersion 8.0.23-mysql 

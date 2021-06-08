@@ -1,5 +1,0 @@
-2021-06-04 11:03:27.561 +08:00 [INF] Entity Framework Core 5.0.6 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.EntityFrameworkCore.DbMigrations ServerVersion 8.0.23-mysql 
-2021-06-04 11:03:52.866 +08:00 [INF] Entity Framework Core 5.0.6 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.EntityFrameworkCore.DbMigrations ServerVersion 8.0.23-mysql 
-2021-06-04 11:06:15.345 +08:00 [INF] User profile is available. Using 'C:\Users\vivi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2021-06-04 11:07:09.131 +08:00 [INF] User profile is available. Using 'C:\Users\vivi\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2021-06-04 11:07:09.809 +08:00 [INF] Entity Framework Core 5.0.6 initialized 'SuktContext' using provider 'Pomelo.EntityFrameworkCore.MySql' with options: MigrationsAssembly=Sukt.EtlCore.WorkNode.EntityFrameworkCore.DbMigrations ServerVersion 8.0.23-mysql 

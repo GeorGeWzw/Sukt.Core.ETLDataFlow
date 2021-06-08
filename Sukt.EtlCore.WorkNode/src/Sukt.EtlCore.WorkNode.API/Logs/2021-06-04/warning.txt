@@ -1,2 +1,0 @@
-2021-06-04 11:06:16.798 +08:00 [WRN] Overriding address(es) 'http://localhost:8001'. Binding to endpoints defined in UseKestrel() instead.
-2021-06-04 11:07:10.529 +08:00 [WRN] Overriding address(es) 'http://localhost:8001'. Binding to endpoints defined in UseKestrel() instead.
