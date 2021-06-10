@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +16,9 @@ namespace Sukt.EtlCore.API.Startups
     {
         public override void ApplicationInitialization(ApplicationContext context)
         {
+
+            context.GetApplicationBuilder().UseAuthentication();//授权
+            context.GetApplicationBuilder().UseAuthorization();//认证
         }
 
         public override void ConfigureServices(ConfigureServicesContext context)

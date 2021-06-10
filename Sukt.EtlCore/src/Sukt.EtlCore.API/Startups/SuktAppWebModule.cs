@@ -21,7 +21,7 @@ namespace Sukt.EtlCore.API.Startups
         typeof(AopModule),
         typeof(SuktAutoMapperModuleBase),
         //typeof(CSRedisModuleBase),
-        typeof(IdentityServerAuthModule),//如果是用户及角色等通用功能使用IdentityModule   作为微服务架构则使用IdentityServerAuthModule
+        //typeof(IdentityServerAuthModule),//如果是用户及角色等通用功能使用IdentityModule   作为微服务架构则使用IdentityServerAuthModule
         typeof(SwaggerModule),
         typeof(DependencyAppModule),
         typeof(EventBusAppModuleBase),
@@ -77,8 +77,6 @@ namespace Sukt.EtlCore.API.Startups
             {
                 applicationBuilder.UseCors(_corePolicyName); //添加跨域中间件
             }
-            applicationBuilder.UseAuthentication();//授权
-            applicationBuilder.UseAuthorization();//认证
             applicationBuilder.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
