@@ -23,7 +23,7 @@ namespace Sukt.EtlCore.Application.TaskConfig
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<OperationResponse> UpdateAsync(ScheduleTaskInputDto input);
+        Task<OperationResponse> UpdateAsync(Guid id, ScheduleTaskInputDto input);
         /// <summary>
         /// 表单加载任务配置
         /// </summary>

@@ -47,9 +47,20 @@ namespace DestinyCore.ETLDispatchCenter.API.Controllers
         [HttpPost]
         [Description("添加任务")]
         [AuditLog]
-        public async Task<AjaxResult> CreateAsync([FromBody]ScheduleTaskInputDto input)
+        public async Task<AjaxResult> CreateAsync([FromBody] ScheduleTaskInputDto input)
         {
             return (await _scheduleTaskContract.CreateAsync(input)).ToAjaxResult();
+        }
+        /// <summary>
+        /// 获取任务
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Description("获取任务")]
+        public async Task<AjaxResult> GetLoadAsync([FromQuery] Guid? id)
+        {
+            return (await _scheduleTaskContract.GetLoadAsync(id.Value)).ToAjaxResult();
         }
         /// <summary>
         /// 添加任务
@@ -61,6 +72,29 @@ namespace DestinyCore.ETLDispatchCenter.API.Controllers
         public async Task<PageList<ScheduleTaskPageOutPutDto>> GetPageLoadAsync([FromBody] PageRequest request)
         {
             return (await _scheduleTaskContract.GetLoadPageAsync(request)).PageList();
+        }
+        /// <summary>
+        /// 编辑任务
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        [Description("编辑任务")]
+        public async Task<AjaxResult> UpdateAsync(Guid id, [FromBody] ScheduleTaskInputDto input)
+        {
+            return (await _scheduleTaskContract.UpdateAsync(id,input)).ToAjaxResult();
+        }
+        /// <summary>
+        /// 删除任务
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        [Description("删除任务")]
+        public async Task<AjaxResult> DeleteAsync(Guid id)
+        {
+            return (await _scheduleTaskContract.DeleteAsync(id)).ToAjaxResult();
         }
     }
 }

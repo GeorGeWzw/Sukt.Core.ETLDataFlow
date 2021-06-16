@@ -38,9 +38,9 @@ namespace DestinyCore.ETLDispatchCenter.Application.TaskConfig
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public async Task<OperationResponse> UpdateAsync(ScheduleTaskInputDto input)
+        public async Task<OperationResponse> UpdateAsync(Guid id, ScheduleTaskInputDto input)
         {
-            ScheduleTask entity = await _scheduleTaskRepository.GetByIdAsync(input.Id);
+            ScheduleTask entity = await _scheduleTaskRepository.GetByIdAsync(id);
             entity.Change(input.TaskNumber, input.TaskName, input.TaskType, input.TaskConfig, input.Describe/*, input.SourceConnectionId, input.TargetConnectionId, input.SourceTable, input.TargetTable*/);
             return await _scheduleTaskRepository.UpdateAsync(entity);
         }

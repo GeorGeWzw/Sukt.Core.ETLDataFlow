@@ -8,7 +8,7 @@ namespace Sukt.EtlCore.Dtos.TaskConfig
     /// <summary>
     /// 任务配置
     /// </summary>
-    public class ScheduleTaskInputDto : InputDto<Guid>
+    public class ScheduleTaskInputDto 
     {
         /// <summary>
         /// 任务编号
