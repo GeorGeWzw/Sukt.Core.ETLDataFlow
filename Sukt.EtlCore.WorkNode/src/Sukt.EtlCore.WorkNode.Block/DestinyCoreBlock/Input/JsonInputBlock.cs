@@ -1,9 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using JetBrains.Annotations;
+using Json.Path;
+using Sukt.EtlCore.WorkNode.Block.BlockOption.Enum;
 using Sukt.EtlCore.WorkNode.Block.BlockOption.Input;
 using Sukt.EtlCore.WorkNode.BlockFLowkDataTransMission;
+using Sukt.Module.Core.Extensions;
 
 namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
 {
@@ -18,7 +27,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// 目标连接块
         /// </summary>
         private readonly ITargetBlock<TDataTransMission> _mTarget;
-        public JsonInputBlock(ReadJsonConfig readJsonConfig)
+        public JsonInputBlock(ReadJsonInput readJsonInput)
         {
             // 创建一个队列来保存消息。
             var queue = new Queue<TDataTransMission>();
@@ -29,15 +38,19 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
             {
                
             });
-            
-            
 
+            //读取json到dataTable
+            var reader =  new Utf8JsonReader(Encoding.UTF8.GetBytes(readJsonInput.JsonString));
+            if (JsonDocument.TryParseValue(ref reader, out var doc))
+            {
+                DataTransMission = new DataTransMission{Table = ReadJson(doc, readJsonInput.JsonReadConfig)};
+            }
+            
             // 当目标设置为完成状态时，传播任何并将源设置为已完成状态。
             target.Completion.ContinueWith(delegate
             {
                 source.Complete();
             });
-            DataTransMission = new DataTransMission();
             _mTarget = target;
             _mSource = source;
         }
@@ -58,6 +71,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         {
             _mTarget.Complete();
         }
+        
         /// <summary>
         /// 断层故障处理
         /// </summary>
@@ -150,6 +164,75 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         }
         #endregion
 
+        private DataTable ReadJson(JsonDocument doc, [ItemNotNull] IEnumerable<JsonReadConfiguration> readConfigurations)
+        {
+            var table = new DataTable();
+            table.Columns.AddRange(ReadColumns(readConfigurations));
+            // 判断是否为数组
+            switch (doc.RootElement.ValueKind)
+            {
+                case JsonValueKind.Object:// 读取单个json对象
+                    table.Rows.Add(ReadRow(table.NewRow(), doc.RootElement, readConfigurations));
+                    break;
+                case JsonValueKind.Array:// 读取json数组
+                    foreach (var e in doc.RootElement.EnumerateArray())
+                    {
+                        table.Rows.Add(ReadRow(table.NewRow(), e, readConfigurations));
+                    }
+                    break;
+                case JsonValueKind.String:
+                case JsonValueKind.Number:
+                case JsonValueKind.True:
+                case JsonValueKind.False:
+                case JsonValueKind.Null:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
+            return table;
+        }
+
+        private DataRow ReadRow(DataRow row, JsonElement element, IEnumerable<JsonReadConfiguration> readConfigurations)
+        {
+            foreach (var c in readConfigurations)
+            {
+                if (!JsonPath.TryParse(c.PathField, out var path)) continue;
+                
+                Debug.Assert(path != null, nameof(path) + " != null");
+                var results = path.Evaluate(element);
+                if (results.Matches.IsNull())
+                {
+                    throw new InvalidOperationException();
+                }
+
+                var valueNode = results.Matches.First().Value;
+                row[c.FLowField] = valueNode.ValueKind switch
+                {
+                    JsonValueKind.String => valueNode.GetReferenceValue(c.FieldType),
+                    JsonValueKind.Number => valueNode.GetValue(c.FieldType),
+                    JsonValueKind.True => valueNode.GetValue(c.FieldType),
+                    JsonValueKind.False => valueNode.GetValue(c.FieldType),
+                    JsonValueKind.Null => valueNode.GetReferenceValue(c.FieldType),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
+
+            return row;
+        }
+
+        private DataColumn[] ReadColumns(IEnumerable<JsonReadConfiguration> readConfigurations) => readConfigurations
+            .Select(c =>
+                new DataColumn(c.FLowField, GetProperType(c.FieldType))).ToArray();
+
+        private Type GetProperType(FieldTypeEnum fieldType)
+        {
+            return fieldType switch
+            {
+                FieldTypeEnum.String => typeof(string),
+                FieldTypeEnum.Integer => typeof(int),
+                FieldTypeEnum.Double => typeof(double),
+                _ => throw new ArgumentOutOfRangeException(nameof(fieldType), fieldType, null)
+            };
+        }
     }
 }

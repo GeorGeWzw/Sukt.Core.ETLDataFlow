@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="JsonPath.Net" Version="0.1.7" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.0.10" />
+  </ItemGroup>
 </Project>

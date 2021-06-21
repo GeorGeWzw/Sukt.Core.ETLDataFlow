@@ -9,5 +9,20 @@
         /// 字符串类型
         /// </summary>
         String = 0,
+        
+        /// <summary>
+        /// 整型
+        /// </summary>
+        Integer,
+        
+        /// <summary>
+        /// 双精度浮点
+        /// </summary>
+        Double,
+        
+        /// <summary>
+        /// 布尔类型
+        /// </summary>
+        Boolean,
     }
 }

@@ -7,17 +7,18 @@ namespace Sukt.EtlCore.WorkNode.Block.BlockOption.Input
     /// <summary>
     /// 通过jsonPath读取json字符串内容
     /// </summary>
-    public class ReadJsonConfig
+    public class ReadJsonInput
     {
         /// <summary>
-        /// FTP配置项
+        /// Json字符串
         /// </summary>
         public string JsonString { get; set; }
         /// <summary>
         /// Json读取配置
         /// </summary>
-        public List<JsonReadConfigInput> JsonReadConfig { get; set; }
+        public List<JsonReadConfiguration> JsonReadConfig { get; set; }
     }
+    
     /// <summary>
     /// FTP配置项
     /// </summary>
@@ -46,13 +47,13 @@ namespace Sukt.EtlCore.WorkNode.Block.BlockOption.Input
         /// <summary>
         /// 是否忽略空文件
         /// </summary>
-        public bool IsIgnoreEmptyfile { get; set; }
-
+        public bool IsIgnoreEmptyFile { get; set; }
     }
+    
     /// <summary>
     /// Json读取配置
     /// </summary>
-    public class JsonReadConfigInput
+    public class JsonReadConfiguration
     {
         /// <summary>
         /// 唯一键
