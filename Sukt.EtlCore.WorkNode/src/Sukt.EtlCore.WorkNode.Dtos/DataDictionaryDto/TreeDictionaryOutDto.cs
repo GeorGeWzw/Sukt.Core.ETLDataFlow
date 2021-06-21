@@ -9,17 +9,17 @@ namespace Sukt.EtlCore.WorkNode.Dtos.DataDictionaryDto
         /// <summary>
         /// 标题
         /// </summary>
-        public string title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// 是否展开直子节点
         /// </summary>
-        public bool expand { get; set; }
+        public bool Expand { get; set; }
 
         /// <summary>
         /// 禁掉响应
         /// </summary>
-        public string disabled { get; set; }
+        public string Disabled { get; set; }
 
         /// <summary>
         /// 组织架构深度

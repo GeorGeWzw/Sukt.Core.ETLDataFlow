@@ -8,8 +8,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
-    <PackageReference Include="SqlSugarCore" Version="5.0.3" />
-    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.4" />
-    <PackageReference Include="Sukt.Module.Core" Version="1.0.2" />
+    <PackageReference Include="SqlSugarCore" Version="5.0.3.1" />
+    <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.10" />
+    <PackageReference Include="Sukt.Module.Core" Version="1.0.10" />
   </ItemGroup>
 </Project>

@@ -15,28 +15,30 @@ namespace Sukt.EtlCore.EntityFrameworkCore
     {
         public override void ConfigureServices(ConfigureServicesContext context)
         {
-            var services = context.Services;
-            var provider = services.BuildServiceProvider();
-            this.AddDbDriven(context.Services);
             var configuration = context.Services.GetConfiguration();
             context.Services.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
-            var settings = context.Services.GetAppSettings();
+            base.ConfigureServices(context);
+            //AddAddSuktDbContextWnitUnitOfWork(context.Services);
+            //AddRepository(context.Services);
+        }
 
+        public override void AddDbContextWithUnitOfWork(IServiceCollection services)
+        {
+            var provider = services.BuildServiceProvider();
+            var settings = services.GetAppSettings();
             var connection = services.GetConfiguration()["SuktCore:DbContexts:MySql:ConnectionString"];
             //var connection = services.GetFileByConfiguration("SuktCore:DbContext:MongoDBConnectionString", "未找到存放MongoDB数据库链接的文件");
             if (Path.GetExtension(connection).ToLower() == ".txt") //txt文件
             {
                 connection = provider.GetFileText(connection, $"未找到存放MySql数据库链接的文件");
             }
-            context.Services.AddSuktDbContext<SuktContext>(x=> {
-                x.ConnectionString = connection;//settings.DbContexts.Values.First().ConnectionString;
-                x.DatabaseType = settings.DbContexts.Values.First().DatabaseType;
-                x.MigrationsAssemblyName = settings.DbContexts.Values.First().MigrationsAssemblyName;
+
+            services.AddSuktDbContext<SuktContext>(options =>
+            {
+                options.ConnectionString = connection;
+                options.DatabaseType = settings.DbContexts["MySql"].DatabaseType;
             });
-            context.Services.AddUnitOfWork<SuktContext>();
-            context.Services.AddRepository();
-            //AddAddSuktDbContextWnitUnitOfWork(context.Services);
-            //AddRepository(context.Services);
+            services.AddUnitOfWork<SuktContext>();
         }
         //protected virtual IServiceCollection AddRepository(IServiceCollection services)
         //{

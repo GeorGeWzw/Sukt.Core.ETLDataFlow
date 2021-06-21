@@ -7,7 +7,7 @@ namespace Sukt.EtlCore.WorkNode.Dtos.DataDictionaryDto
     {
         public DictionaryProfile()
         {
-            CreateMap<DataDictionaryEntity, TreeDictionaryOutDto>().ForMember(x => x.title, opt => opt.MapFrom(x => x.Title));
+            CreateMap<DataDictionaryEntity, TreeDictionaryOutDto>().ForMember(x => x.Title, opt => opt.MapFrom(x => x.Title));
         }
     }
 }

@@ -18,28 +18,30 @@ namespace Sukt.EtlCore.Application.TaskConfig
         /// <param name="input"></param>
         /// <returns></returns>
         Task<OperationResponse> CreateAsync(ScheduleTaskInputDto input);
+
         /// <summary>
         /// 修改任务配置
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
         Task<OperationResponse> UpdateAsync(Guid id, ScheduleTaskInputDto input);
         /// <summary>
         /// 表单加载任务配置
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         Task<OperationResponse> GetLoadAsync(Guid id);
         /// <summary>
         /// 分页加载任务配置
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
         Task<IPageResult<ScheduleTaskPageOutPutDto>> GetLoadPageAsync(PageRequest request);
         /// <summary>
         /// 删除对象
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         Task<OperationResponse> DeleteAsync(Guid id);
         /// <summary>

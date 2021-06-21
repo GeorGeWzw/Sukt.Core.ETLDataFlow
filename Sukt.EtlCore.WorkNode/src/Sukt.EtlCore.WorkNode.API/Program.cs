@@ -15,7 +15,6 @@ namespace Sukt.EtlCore.WorkNode.API
     {
         public static void Main(string[] args)
         {
-            //SeriLogLogger.SetSeriLoggerToFile("logs");
             CreateHostBuilder(args).Build().Run();
         }
 

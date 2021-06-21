@@ -14,19 +14,22 @@ namespace Sukt.EtlCore.WorkNode.EntityFrameworkCore
     {
         public override void ConfigureServices(ConfigureServicesContext context)
         {
-            this.AddDbDriven(context.Services);
             var configuration = context.Services.GetConfiguration();
             context.Services.Configure<AppOptionSettings>(configuration.GetSection("SuktCore"));
-            var settings = context.Services.GetAppSettings();
-            context.Services.AddSuktDbContext<SuktContext>(x=> {
+            base.ConfigureServices(context);
+            //AddAddSuktDbContextWnitUnitOfWork(context.Services);
+            //AddRepository(context.Services);
+        }
+
+        public override void AddDbContextWithUnitOfWork(IServiceCollection services)
+        {
+            var settings = services.GetAppSettings();
+            services.AddSuktDbContext<SuktContext>(x=> {
                 x.ConnectionString = settings.DbContexts.Values.First().ConnectionString;
                 x.DatabaseType = settings.DbContexts.Values.First().DatabaseType;
                 x.MigrationsAssemblyName = settings.DbContexts.Values.First().MigrationsAssemblyName;
             });
-            context.Services.AddUnitOfWork<SuktContext>();
-            context.Services.AddRepository();
-            //AddAddSuktDbContextWnitUnitOfWork(context.Services);
-            //AddRepository(context.Services);
+            services.AddUnitOfWork<SuktContext>();
         }
         //protected virtual IServiceCollection AddRepository(IServiceCollection services)
         //{

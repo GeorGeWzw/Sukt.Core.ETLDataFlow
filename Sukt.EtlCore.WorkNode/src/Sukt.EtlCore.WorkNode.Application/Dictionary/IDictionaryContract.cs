@@ -27,7 +27,6 @@ namespace Sukt.EtlCore.WorkNode.Application
         /// <summary>
         /// 获取树形数据
         /// </summary>
-        /// <param name="query"></param>
         /// <returns></returns>
         Task<OperationResponse> GetTreeAsync();
 
@@ -40,7 +39,8 @@ namespace Sukt.EtlCore.WorkNode.Application
         /// <summary>
         /// 删除一行数据
         /// </summary>
+        /// <param name="id"></param>
         /// <returns></returns>
-        Task<OperationResponse> DeleteAsync(Guid Id);
+        Task<OperationResponse> DeleteAsync(Guid id);
     }
 }

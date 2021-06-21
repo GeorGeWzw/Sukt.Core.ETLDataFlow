@@ -1,18 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sukt.AspNetCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Sukt.EtlCore.Application.TaskConfig;
 using Sukt.EtlCore.Dtos.TaskConfig;
 using Sukt.Module.Core.AjaxResult;
 using Sukt.Module.Core.Audit;
 using Sukt.Module.Core.Entity;
 using Sukt.Module.Core.Extensions;
-using Sukt.Module.Core.Extensions.ResultExtensions;
 using Sukt.Module.Core.OperationResult;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DestinyCore.ETLDispatchCenter.API.Controllers
@@ -39,6 +34,7 @@ namespace DestinyCore.ETLDispatchCenter.API.Controllers
         {
             return (await _scheduleTaskContract.GetLoadSelectListItemAsync()).ToAjaxResult();
         }
+        
         /// <summary>
         /// 添加任务
         /// </summary>
