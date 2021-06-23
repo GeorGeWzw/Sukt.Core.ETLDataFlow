@@ -9,6 +9,7 @@
   </ItemGroup>
 
 <ItemGroup>
+    <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Block\Sukt.EtlCore.WorkNode.Block.csproj" />
     <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Domain.Models\Sukt.EtlCore.WorkNode.Domain.Models.csproj" />
     <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Domain.Repository\Sukt.EtlCore.WorkNode.Domain.Repository.csproj" />
     <ProjectReference Include="..\Sukt.EtlCore.WorkNode.Domain.Services\Sukt.EtlCore.WorkNode.Domain.Services.csproj" />

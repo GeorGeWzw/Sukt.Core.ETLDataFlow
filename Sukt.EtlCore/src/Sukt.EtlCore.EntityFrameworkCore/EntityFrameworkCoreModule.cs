@@ -28,15 +28,11 @@ namespace Sukt.EtlCore.EntityFrameworkCore
             var settings = services.GetAppSettings();
             var connection = services.GetConfiguration()["SuktCore:DbContexts:MySql:ConnectionString"];
             //var connection = services.GetFileByConfiguration("SuktCore:DbContext:MongoDBConnectionString", "未找到存放MongoDB数据库链接的文件");
-            if (Path.GetExtension(connection).ToLower() == ".txt") //txt文件
-            {
-                connection = provider.GetFileText(connection, $"未找到存放MySql数据库链接的文件");
-            }
-
             services.AddSuktDbContext<SuktContext>(options =>
             {
                 options.ConnectionString = connection;
                 options.DatabaseType = settings.DbContexts["MySql"].DatabaseType;
+                options.MigrationsAssemblyName = settings.DbContexts.First().Value.MigrationsAssemblyName;
             });
             services.AddUnitOfWork<SuktContext>();
         }
