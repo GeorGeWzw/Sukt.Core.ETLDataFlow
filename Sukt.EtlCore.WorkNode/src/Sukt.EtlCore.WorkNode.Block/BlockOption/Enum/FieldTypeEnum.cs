@@ -24,5 +24,15 @@
         /// 布尔类型
         /// </summary>
         Boolean,
+        
+        /// <summary>
+        /// Guid类型
+        /// </summary>
+        Guid,
+        
+        /// <summary>
+        /// 日期类型
+        /// </summary>
+        DateTime,
     }
 }

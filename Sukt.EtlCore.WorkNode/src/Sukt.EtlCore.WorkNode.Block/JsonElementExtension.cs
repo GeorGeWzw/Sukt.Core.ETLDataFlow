@@ -13,6 +13,8 @@ namespace Sukt.EtlCore.WorkNode.Block
                 FieldTypeEnum.Double => e.GetDouble(),
                 FieldTypeEnum.Integer => e.GetInt32(),
                 FieldTypeEnum.Boolean => e.GetBoolean(),
+                FieldTypeEnum.Guid => e.GetGuid(),
+                FieldTypeEnum.DateTime => e.GetDateTime(),
                 _ => throw  new InvalidCastException($"can not convert to {type}")
             };
         }

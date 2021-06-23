@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="MediatRTest.cs" />
-    <Compile Remove="SuktDependencyModuleTest.cs" />
-    <Compile Remove="SuktTestAutoMapper.cs" />
-    <Compile Remove="SuktTestServerFixtureBase.cs" />
-    <Compile Remove="SuktTestStartup.cs" />
-    <Compile Remove="SuktWebApplicationFactory.cs" />
-    <Compile Remove="UnitTest1.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="appsettings.Development.json" />
     <None Remove="appsettings.json" />
   </ItemGroup>
@@ -34,6 +24,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Shouldly" Version="4.0.3" />
     <PackageReference Include="Sukt.EntityFrameworkCore" Version="1.0.10" />
     <PackageReference Include="Sukt.Module.Core" Version="1.0.10" />
     <PackageReference Include="Sukt.TestBase" Version="1.0.10" />
@@ -56,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Sukt.EtlCore.WorkNode.Application\Sukt.EtlCore.WorkNode.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="阿丙曼特_2020-2021.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

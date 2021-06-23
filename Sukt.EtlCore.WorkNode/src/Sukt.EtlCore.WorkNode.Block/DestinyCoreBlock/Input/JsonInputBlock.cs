@@ -30,7 +30,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         public JsonInputBlock(ReadJsonInput readJsonInput)
         {
             // 创建一个队列来保存消息。
-            var queue = new Queue<TDataTransMission>();
+            //var queue = new Queue<TDataTransMission>();
             //传播器的源部分包含大小为readJsonConfig的对象并将数据传播到任何连接的目标。
             var source = new BufferBlock<TDataTransMission>();
             // 目标部件接收数据并将其添加到队列中。
@@ -41,7 +41,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
 
             //读取json到dataTable
             var reader =  new Utf8JsonReader(Encoding.UTF8.GetBytes(readJsonInput.JsonString));
-            if (JsonDocument.TryParseValue(ref reader, out var doc))
+            if (JsonDocument.TryParseValue(ref reader, out var doc))//非json字符串会在此处抛出JsonReaderException异常 Expected a value, but instead reached end of data.
             {
                 DataTransMission = new DataTransMission{Table = ReadJson(doc, readJsonInput.JsonReadConfig)};
             }
@@ -164,27 +164,22 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         }
         #endregion
 
-        private DataTable ReadJson(JsonDocument doc, [ItemNotNull] IEnumerable<JsonReadConfiguration> readConfigurations)
+        private DataTable ReadJson(JsonDocument doc, [ItemNotNull] List<JsonReadConfiguration> readConfigurations)
         {
             var table = new DataTable();
             table.Columns.AddRange(ReadColumns(readConfigurations));
             // 判断是否为数组
             switch (doc.RootElement.ValueKind)
             {
-                case JsonValueKind.Object:// 读取单个json对象
-                    table.Rows.Add(ReadRow(table.NewRow(), doc.RootElement, readConfigurations));
-                    break;
-                case JsonValueKind.Array:// 读取json数组
-                    foreach (var e in doc.RootElement.EnumerateArray())
-                    {
-                        table.Rows.Add(ReadRow(table.NewRow(), e, readConfigurations));
-                    }
-                    break;
+                case JsonValueKind.Object:
+                case JsonValueKind.Array:
                 case JsonValueKind.String:
                 case JsonValueKind.Number:
                 case JsonValueKind.True:
                 case JsonValueKind.False:
                 case JsonValueKind.Null:
+                    ReadAll(table, doc.RootElement, readConfigurations);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -192,8 +187,9 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
             return table;
         }
 
-        private DataRow ReadRow(DataRow row, JsonElement element, IEnumerable<JsonReadConfiguration> readConfigurations)
+        private void ReadAll(DataTable table, JsonElement element, List<JsonReadConfiguration> readConfigurations)
         {
+            List<object[]> data = new(readConfigurations.Count());
             foreach (var c in readConfigurations)
             {
                 if (!JsonPath.TryParse(c.PathField, out var path)) continue;
@@ -205,19 +201,32 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
                     throw new InvalidOperationException();
                 }
 
-                var valueNode = results.Matches.First().Value;
-                row[c.FLowField] = valueNode.ValueKind switch
+                object[] columnValue = new object[results.Matches.Count];
+                for (int i = 0; i < results.Matches.Count; i++)
                 {
-                    JsonValueKind.String => valueNode.GetReferenceValue(c.FieldType),
-                    JsonValueKind.Number => valueNode.GetValue(c.FieldType),
-                    JsonValueKind.True => valueNode.GetValue(c.FieldType),
-                    JsonValueKind.False => valueNode.GetValue(c.FieldType),
-                    JsonValueKind.Null => valueNode.GetReferenceValue(c.FieldType),
-                    _ => throw new ArgumentOutOfRangeException()
-                };
+                    PathMatch valueNode = results.Matches[i];
+                    columnValue[i] = valueNode.Value.ValueKind switch
+                    {
+                        JsonValueKind.String => valueNode.Value.GetReferenceValue(c.FieldType),
+                        JsonValueKind.Number => valueNode.Value.GetValue(c.FieldType),
+                        JsonValueKind.True => valueNode.Value.GetValue(c.FieldType),
+                        JsonValueKind.False => valueNode.Value.GetValue(c.FieldType),
+                        JsonValueKind.Null => valueNode.Value.GetReferenceValue(c.FieldType),
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                }
+                data.Add(columnValue);
             }
 
-            return row;
+            for (int i = 0; i < data[0].Length; i++)
+            {
+                var r = table.NewRow();
+                for (int j = 0; j < readConfigurations.Count; j++)
+                {
+                    r[readConfigurations[j].FLowField] = data[j][i];
+                }
+                table.Rows.Add(r);
+            }
         }
 
         private DataColumn[] ReadColumns(IEnumerable<JsonReadConfiguration> readConfigurations) => readConfigurations
