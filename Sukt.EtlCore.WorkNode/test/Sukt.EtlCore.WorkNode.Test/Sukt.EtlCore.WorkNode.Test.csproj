@@ -49,7 +49,7 @@
     <ProjectReference Include="..\..\src\Sukt.EtlCore.WorkNode.Application\Sukt.EtlCore.WorkNode.Application.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="阿丙曼特_2020-2021.json">
+    <None Update="test.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

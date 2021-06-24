@@ -16,35 +16,31 @@ using Sukt.Module.Core.Extensions;
 
 namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
 {
-    public class JsonInputBlock<TDataTransMission> : IPropagatorBlock<TDataTransMission, TDataTransMission>, IReceivableSourceBlock<TDataTransMission>
+    public class JsonInputBlock : IPropagatorBlock<ReadJsonInput, IDataTransMission>, IReceivableSourceBlock<IDataTransMission>
     {
-        public readonly DataTransMission DataTransMission;
         /// <summary>
         /// 私有来源表变量
         /// </summary>
-        private readonly IReceivableSourceBlock<TDataTransMission> _mSource;
+        private readonly IReceivableSourceBlock<IDataTransMission> _mSource;
         /// <summary>
         /// 目标连接块
         /// </summary>
-        private readonly ITargetBlock<TDataTransMission> _mTarget;
-        public JsonInputBlock(ReadJsonInput readJsonInput)
+        private readonly ITargetBlock<ReadJsonInput> _mTarget;
+        public JsonInputBlock()
         {
-            // 创建一个队列来保存消息。
-            //var queue = new Queue<TDataTransMission>();
-            //传播器的源部分包含大小为readJsonConfig的对象并将数据传播到任何连接的目标。
-            var source = new BufferBlock<TDataTransMission>();
+            //传播器的源部分包含大小为readJsonInput 的对象并将数据传播到任何连接的目标。
+            var source = new BufferBlock<IDataTransMission>();
             // 目标部件接收数据并将其添加到队列中。
-            var target = new ActionBlock<TDataTransMission>(item =>
+            var target = new ActionBlock<ReadJsonInput>(readJsonInput =>
             {
-               
+                //读取json到dataTable
+                var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(readJsonInput.JsonString));
+                if (JsonDocument.TryParseValue(ref reader, out var doc))//非json字符串会在此处抛出JsonReaderException异常 Expected a value, but instead reached end of data.
+                {
+                   var dataTransMission = new DataTransMission { Table = ReadJson(doc, readJsonInput.JsonReadConfig) };
+                   source.Post<DataTransMission>(dataTransMission);
+                }
             });
-
-            //读取json到dataTable
-            var reader =  new Utf8JsonReader(Encoding.UTF8.GetBytes(readJsonInput.JsonString));
-            if (JsonDocument.TryParseValue(ref reader, out var doc))//非json字符串会在此处抛出JsonReaderException异常 Expected a value, but instead reached end of data.
-            {
-                DataTransMission = new DataTransMission{Table = ReadJson(doc, readJsonInput.JsonReadConfig)};
-            }
             
             // 当目标设置为完成状态时，传播任何并将源设置为已完成状态。
             target.Completion.ContinueWith(delegate
@@ -54,9 +50,6 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
             _mTarget = target;
             _mSource = source;
         }
-        // 获取数据
-        public DataTransMission Data => DataTransMission;
-
 
         #region IDataflowBlock 数据流块成员
         /// <summary>
@@ -89,9 +82,9 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="target"></param>
         /// <param name="linkOptions"></param>
         /// <returns></returns>
-        public IDisposable LinkTo(ITargetBlock<TDataTransMission> target, DataflowLinkOptions linkOptions)
+        public IDisposable LinkTo(ITargetBlock<IDataTransMission> target, DataflowLinkOptions linkOptions)
         {
-            return _mSource.LinkTo(_mTarget, linkOptions);
+            return _mSource.LinkTo(target, linkOptions);
         }
         /// <summary>
         /// 由目标调用以使用来自源的先前提供的消息。
@@ -100,7 +93,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="target"></param>
         /// <param name="messageConsumed"></param>
         /// <returns></returns>
-        TDataTransMission ISourceBlock<TDataTransMission>.ConsumeMessage(DataflowMessageHeader messageHeader, ITargetBlock<TDataTransMission> target, out bool messageConsumed)
+        IDataTransMission ISourceBlock<IDataTransMission>.ConsumeMessage(DataflowMessageHeader messageHeader, ITargetBlock<IDataTransMission> target, out bool messageConsumed)
         {
             return _mSource.ConsumeMessage(messageHeader,
                target, out messageConsumed);
@@ -111,7 +104,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="messageHeader"></param>
         /// <param name="target"></param>
         /// <returns></returns>
-        bool ISourceBlock<TDataTransMission>.ReserveMessage(DataflowMessageHeader messageHeader, ITargetBlock<TDataTransMission> target)
+        bool ISourceBlock<IDataTransMission>.ReserveMessage(DataflowMessageHeader messageHeader, ITargetBlock<IDataTransMission> target)
         {
             return _mSource.ReserveMessage(messageHeader, target);
         }
@@ -120,7 +113,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// </summary>
         /// <param name="messageHeader"></param>
         /// <param name="target"></param>
-        void ISourceBlock<TDataTransMission>.ReleaseReservation(DataflowMessageHeader messageHeader, ITargetBlock<TDataTransMission> target)
+        void ISourceBlock<IDataTransMission>.ReleaseReservation(DataflowMessageHeader messageHeader, ITargetBlock<IDataTransMission> target)
         {
             _mSource.ReleaseReservation(messageHeader, target);
         }
@@ -133,7 +126,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="filter"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        public bool TryReceive(Predicate<TDataTransMission> filter, out TDataTransMission item)
+        public bool TryReceive(Predicate<IDataTransMission> filter, out IDataTransMission item)
         {
             return _mSource.TryReceive(filter, out item);
         }
@@ -142,7 +135,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool TryReceiveAll(out IList<TDataTransMission> items)
+        public bool TryReceiveAll(out IList<IDataTransMission> items)
         {
             return _mSource.TryReceiveAll(out items);
         }
@@ -157,7 +150,7 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
         /// <param name="source"></param>
         /// <param name="consumeToAccept"></param>
         /// <returns></returns>
-        DataflowMessageStatus ITargetBlock<TDataTransMission>.OfferMessage(DataflowMessageHeader messageHeader, TDataTransMission messageValue, ISourceBlock<TDataTransMission> source, bool consumeToAccept)
+        DataflowMessageStatus ITargetBlock<ReadJsonInput>.OfferMessage(DataflowMessageHeader messageHeader, ReadJsonInput messageValue, ISourceBlock<ReadJsonInput> source, bool consumeToAccept)
         {
             return _mTarget.OfferMessage(messageHeader,
                messageValue, source, consumeToAccept);
@@ -166,24 +159,14 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
 
         private DataTable ReadJson(JsonDocument doc, [ItemNotNull] List<JsonReadConfiguration> readConfigurations)
         {
-            var table = new DataTable();
-            table.Columns.AddRange(ReadColumns(readConfigurations));
-            // 判断是否为数组
-            switch (doc.RootElement.ValueKind)
+            if(doc.RootElement.ValueKind == JsonValueKind.Undefined || doc.RootElement.ValueKind == JsonValueKind.Null)
             {
-                case JsonValueKind.Object:
-                case JsonValueKind.Array:
-                case JsonValueKind.String:
-                case JsonValueKind.Number:
-                case JsonValueKind.True:
-                case JsonValueKind.False:
-                case JsonValueKind.Null:
-                    ReadAll(table, doc.RootElement, readConfigurations);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                throw new ArgumentException("json字符串不能为空", "JsonString");
             }
 
+            var table = new DataTable();
+            table.Columns.AddRange(ReadColumns(readConfigurations));
+            ReadAll(table, doc.RootElement, readConfigurations);
             return table;
         }
 
@@ -200,7 +183,6 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
                 {
                     throw new InvalidOperationException();
                 }
-
                 object[] columnValue = new object[results.Matches.Count];
                 for (int i = 0; i < results.Matches.Count; i++)
                 {
@@ -211,17 +193,17 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
                         JsonValueKind.Number => valueNode.Value.GetValue(c.FieldType),
                         JsonValueKind.True => valueNode.Value.GetValue(c.FieldType),
                         JsonValueKind.False => valueNode.Value.GetValue(c.FieldType),
-                        JsonValueKind.Null => valueNode.Value.GetReferenceValue(c.FieldType),
+                        JsonValueKind.Null => valueNode.Value.GetReferenceValue(FieldTypeEnum.String),
                         _ => throw new ArgumentOutOfRangeException()
                     };
                 }
                 data.Add(columnValue);
             }
 
-            for (int i = 0; i < data[0].Length; i++)
+            for (int i = 0; i < data[0].Length; i++)//行
             {
                 var r = table.NewRow();
-                for (int j = 0; j < readConfigurations.Count; j++)
+                for (int j = 0; j < readConfigurations.Count; j++)//列
                 {
                     r[readConfigurations[j].FLowField] = data[j][i];
                 }
@@ -239,7 +221,12 @@ namespace Sukt.EtlCore.WorkNode.Block.DestinyCoreBlock.Input
             {
                 FieldTypeEnum.String => typeof(string),
                 FieldTypeEnum.Integer => typeof(int),
+                FieldTypeEnum.Long => typeof(long),
                 FieldTypeEnum.Double => typeof(double),
+                FieldTypeEnum.Boolean => typeof(bool),
+                FieldTypeEnum.DateTimeOffset => typeof(DateTimeOffset),
+                FieldTypeEnum.DateTime => typeof(DateTime),
+                FieldTypeEnum.Guid => typeof(Guid),
                 _ => throw new ArgumentOutOfRangeException(nameof(fieldType), fieldType, null)
             };
         }

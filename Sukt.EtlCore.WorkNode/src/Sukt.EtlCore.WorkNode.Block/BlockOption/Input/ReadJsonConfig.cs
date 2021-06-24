@@ -4,6 +4,20 @@ using Sukt.EtlCore.WorkNode.Block.BlockOption.Enum;
 
 namespace Sukt.EtlCore.WorkNode.Block.BlockOption.Input
 {
+    public class ReadJsonConfiguration
+    {
+        /// <summary>
+        /// Json读取配置
+        /// </summary>
+        public List<JsonReadConfiguration> JsonReadConfig { get; set; }
+
+        /// <summary>
+        /// FTP配置
+        /// </summary>
+        public FtpConfigInput FtpConfiguration { get; set; }
+    }
+
+
     /// <summary>
     /// 通过jsonPath读取json字符串内容
     /// </summary>
@@ -43,7 +57,7 @@ namespace Sukt.EtlCore.WorkNode.Block.BlockOption.Input
         /// <summary>
         /// FTP端口
         /// </summary>
-        public int Port { get; set; }
+        public int Port { get; set; } = 21;
         /// <summary>
         /// 是否忽略空文件
         /// </summary>

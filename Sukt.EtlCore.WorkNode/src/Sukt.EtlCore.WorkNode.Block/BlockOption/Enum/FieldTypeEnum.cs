@@ -14,7 +14,12 @@
         /// 整型
         /// </summary>
         Integer,
-        
+
+        /// <summary>
+        /// 长整型
+        /// </summary>
+        Long,
+
         /// <summary>
         /// 双精度浮点
         /// </summary>
@@ -34,5 +39,10 @@
         /// 日期类型
         /// </summary>
         DateTime,
+
+        /// <summary>
+        /// 带时区的日期类型
+        /// </summary>
+        DateTimeOffset,
     }
 }
